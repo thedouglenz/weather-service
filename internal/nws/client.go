@@ -6,6 +6,9 @@ import (
 	"net/http"
 )
 
+// National Woeather Service API
+// https://www.weather.gov/documentation/services-web-api
+
 type Forecast struct {
 	ShortForecast string  `json:"shortForecast"`
 	Temperature   float64 `json:"temperature"`
@@ -26,6 +29,7 @@ func GetGridInfo(lat, lon string) (string, error) {
 		return "", fmt.Errorf("NWS API returned non-200 status code: %d", resp.StatusCode)
 	}
 
+	// We need only the forecast URL from the response in this step
 	var forecastResponse struct {
 		Properties struct {
 			ForecastURL string `json:"forecast"`
@@ -36,8 +40,7 @@ func GetGridInfo(lat, lon string) (string, error) {
 		return "", fmt.Errorf("failed to decode NWS API response: %v", err)
 	}
 
-	forecastURL := forecastResponse.Properties.ForecastURL
-	return forecastURL, nil
+	return forecastResponse.Properties.ForecastURL, nil
 }
 
 func GetForecast(forecastURL string) (*Forecast, error) {

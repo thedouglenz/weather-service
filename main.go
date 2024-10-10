@@ -8,12 +8,6 @@ import (
 	"github.com/thedouglenz/weather-service/internal/nws"
 )
 
-// National Woeather Service API
-// https://www.weather.gov/documentation/services-web-api
-
-// base URL constant
-const baseURL = "https://api.weather.gov/points/"
-
 func classifyTemperature(temp float64) string {
 	switch {
 	case temp < 32:
@@ -34,7 +28,6 @@ func createRouter() *gin.Engine {
 	router.GET("/weather/:coordinates", func(ctx *gin.Context) {
 		coordinates := ctx.Param("coordinates")
 
-		// Split by comma
 		coords := strings.Split(coordinates, ",")
 		if len(coords) != 2 {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid coordinates"})
