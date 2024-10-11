@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestGetWeatherForecast(t *testing.T) {
+func TestGetForecast(t *testing.T) {
 	mockResponse := `{
         "properties": {
             "periods": [
